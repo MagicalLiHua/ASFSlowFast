@@ -2,7 +2,7 @@
 
 ## Project Structure
 ```
-OpenSource
+ASFSlowFast/
 ├── checkpoints/       # Saved model checkpoints
 ├── data/             # Data processing and loading
 │   └── dataset.py    # Dataset implementation
