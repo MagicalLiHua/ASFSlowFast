@@ -1,18 +1,18 @@
-# ASF SlowFast Network
+# PolyLite RadarNet
 
 ## Project Structure
 ```
-ASFSlowFast/
-├── checkpoints/       # Saved model checkpoints
-├── data/             # Data processing and loading
-│   └── dataset.py    # Dataset implementation
-├── log/              # Training logs
-├── models/           # Model architecture
+PolyLite RadarNet/
+├── checkpoints/           # Saved model checkpoints
+├── data/                  # Data processing and loading
+│   └── dataset.py         # Dataset implementation
+├── log/                   # Training logs
+├── models/                # Model architecture
 │   ├── base_modules.py    # Basic building blocks
 │   └── slowfast_base.py   # SlowFast network implementation
-├── result/           # Evaluation results
-├── main.py          # Training and evaluation scripts
-└── readme.md        # This file
+├── result/                # Evaluation results
+├── main.py                # Training and evaluation scripts
+└── readme.md              # This file
 ```
 
 ## Requirements
@@ -21,8 +21,8 @@ Please see `requirements.txt` for a complete list of dependencies.
 ## Installation
 1. Clone this repository:
 ```bash
-git clone https://github.com/MagicalLiHua/ASFSlowFast.git
-cd ASFSlowFast
+git clone https://github.com/MagicalLiHua/PolyLite-RadarNet.git
+cd PolyLite-RadarNet
 ```
 
 2. Create a virtual environment (recommended):
@@ -44,11 +44,11 @@ pip install -r requirements.txt
 
 #### Download Example Data
 1. Download the example dataset from our shared drive:
-   - [Download Link]()
+   - [Download Link](https://drive.google.com/file/d/1ZuBgUTO50DInxpEk7lghdczS-ZEfzF2M/view?usp=sharing)
    
 2. Extract the downloaded data:
 ```bash
-unzip example_data.zip -d ./data/
+unzip dataset.zip -d ./data/
 ```
 
 #### Data Structure
