@@ -3,7 +3,7 @@ import time
 import torch
 import torch.backends.cudnn as cudnn
 from torch import nn, optim
-from models.slowfast_base import create_slowfast_base
+from models.slowfast_base import SlowFast
 from data.dataset import VideoDataset
 from torch.utils.data import DataLoader, random_split
 from torch.utils.tensorboard import SummaryWriter
@@ -66,7 +66,7 @@ def train(model, train_dataloader, epoch, criterion, optimizer, writer):
         loss = criterion(outputs, labels)
 
         # Measure accuracy and record loss
-        prec1, _, pred_labels = accuracy(outputs, labels)
+        prec1, pred_labels = accuracy(outputs, labels)
         losses.update(loss.item(), inputs.size(0))
         top1.update(prec1.item(), inputs.size(0))
 
@@ -109,16 +109,16 @@ def validate(model, val_dataloader, epoch, criterion, writer):
             loss = criterion(outputs, labels)
 
             # Measure accuracy and record loss
-            prec1, _, pred_labels = accuracy(outputs, labels)
+            prec1, pred_labels = accuracy(outputs, labels)
             losses.update(loss.item(), inputs.size(0))
             top1.update(prec1.item(), inputs.size(0))
 
             batch_time.update(time.time() - end)
             end = time.time()
-
-        print(f'Validation Results - Epoch: [{epoch}]')
-        print(f'Loss {losses.avg:.4f}\t'
-              f'Acc@1 {top1.avg:.3f}')
+        #
+        # print(f'Validation Results - Epoch: [{epoch}]')
+        # print(f'Loss {losses.avg:.4f}\t'
+        #       f'Acc@1 {top1.avg:.3f}')
 
     # Log to tensorboard
     writer.add_scalar('val_loss', losses.avg, epoch)
@@ -131,6 +131,7 @@ def main():
     # Set random seed for reproducibility
     torch.manual_seed(3407)
     cudnn.benchmark = False
+    datadir = "./data/dataset"
 
     # Setup tensorboard
     cur_time = time.strftime('%Y-%m-%d-%H-%M-%S', time.localtime(time.time()))
@@ -143,7 +144,7 @@ def main():
 
     # Dataset loading code here
     # Replace with your actual dataset and dataloader creation
-    dataset = VideoDataset(directory='data', clip_len=64, frame_sample_rate=1)
+    dataset = VideoDataset(directory=datadir, clip_len=64, frame_sample_rate=1)
     train_size = int(0.7 * len(dataset))
     val_size = len(dataset) - train_size
     train_dataset, val_dataset = random_split(dataset, [train_size, val_size])
@@ -151,7 +152,7 @@ def main():
     val_dataloader = DataLoader(val_dataset, batch_size=8, shuffle=False)
 
     # Create model
-    model = create_slowfast_base(num_classes=6)  # Replace with your model
+    model = SlowFast()  # Replace with your model
     model = model.cuda()
 
     # Define loss function and optimizer
